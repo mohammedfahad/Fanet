@@ -1,0 +1,50 @@
+{
+  "generated_at": "2026-06-30T00:00:00+00:00",
+  "items": [
+    {
+      "date": "2026-06-26T00:00:00+00:00",
+      "tag": "security",
+      "tag_class": "model",
+      "title": "Anthropic accuses Alibaba's Qwen team of a large-scale \"distillation attack\" on Claude",
+      "summary": "Anthropic told US senators that roughly 25,000 fraudulent accounts ran 28.8 million exchanges with Claude over six weeks, allegedly to extract its reasoning and coding capabilities for training a rival model.",
+      "source": "unrot.co",
+      "link": "https://unrot.co/blogs/today-top-10-ai-news-june-26-2026"
+    },
+    {
+      "date": "2026-06-25T00:00:00+00:00",
+      "tag": "hardware",
+      "tag_class": "",
+      "title": "OpenAI unveils its first custom AI chip, \"Jalapeño,\" built with Broadcom",
+      "summary": "The chip is designed specifically for inference, running already-trained models to serve ChatGPT and API traffic, rather than for training new ones.",
+      "source": "unrot.co",
+      "link": "https://unrot.co/blogs/today-top-10-ai-news-june-26-2026"
+    },
+    {
+      "date": "2026-06-22T00:00:00+00:00",
+      "tag": "market",
+      "tag_class": "",
+      "title": "ChatGPT's share of the AI assistant market drops below half for the first time",
+      "summary": "A widely-cited industry report puts ChatGPT at 46.4% of the global market, with Gemini climbing to 27.7% and Claude reaching 10.3%, though ChatGPT still leads on raw user count at 1.1 billion monthly users.",
+      "source": "Build Fast with AI",
+      "link": "https://www.buildfastwithai.com/blogs/ai-news-today-june-22-2026"
+    },
+    {
+      "date": "2026-06-05T00:00:00+00:00",
+      "tag": "hardware",
+      "tag_class": "",
+      "title": "Meta reportedly building a wearable AI lineup for the workplace",
+      "summary": "Beyond consumer AI glasses, Meta is said to be testing an AI-powered pendant and a business-focused line called \"Wearables for Work,\" following its acquisition of startup Limitless.",
+      "source": "MarketingProfs",
+      "link": "https://www.marketingprofs.com/opinions/2026/54909/ai-update-june-5-2026-ai-news-and-views-from-the-past-week"
+    },
+    {
+      "date": "2026-06-01T00:00:00+00:00",
+      "tag": "adoption",
+      "tag_class": "",
+      "title": "ChatGPT reportedly passes one billion monthly active users",
+      "summary": "The milestone underlines how quickly AI assistants have moved from novelty to daily habit for both personal and professional use.",
+      "source": "AI News Weekly",
+      "link": "https://medium.com/@davidakpovi/ai-news-week-of-june-1-to-june-7-2026-7957940c805a"
+    }
+  ]
+}

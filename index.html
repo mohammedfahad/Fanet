@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Signal — AI News & Learning Feed</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400..700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#0E1116;
+    --panel:#151920;
+    --paper:#ECEAE3;
+    --muted:#8A92A0;
+    --hairline:#232830;
+    --amber:#FF8A3D;
+    --teal:#3DDC97;
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  body{
+    background:var(--ink);
+    color:var(--paper);
+    font-family:'Inter', sans-serif;
+    line-height:1.5;
+    -webkit-font-smoothing:antialiased;
+  }
+  a{color:inherit; text-decoration:none;}
+
+  /* ---------- Layout shell ---------- */
+  .wrap{
+    max-width:1080px;
+    margin:0 auto;
+    padding:0 24px;
+  }
+
+  header.top{
+    border-bottom:1px solid var(--hairline);
+    position:sticky; top:0;
+    background:rgba(14,17,22,0.92);
+    backdrop-filter:blur(6px);
+    z-index:10;
+  }
+  .top-inner{
+    display:flex; align-items:center; justify-content:space-between;
+    padding:18px 24px;
+    max-width:1080px; margin:0 auto;
+  }
+  .logo{
+    font-family:'Fraunces', serif;
+    font-size:22px;
+    font-weight:600;
+    letter-spacing:-0.01em;
+    display:flex; align-items:center; gap:8px;
+  }
+  .logo .dot{
+    width:8px; height:8px; border-radius:50%;
+    background:var(--amber);
+    box-shadow:0 0 0 3px rgba(255,138,61,0.18);
+  }
+  nav.top-nav{display:flex; gap:28px; font-size:14px; color:var(--muted);}
+  nav.top-nav a:hover{color:var(--paper);}
+
+  /* ---------- Hero ---------- */
+  .hero{
+    padding:64px 24px 40px;
+    max-width:1080px; margin:0 auto;
+    border-bottom:1px solid var(--hairline);
+  }
+  .eyebrow{
+    font-family:'JetBrains Mono', monospace;
+    font-size:12px;
+    color:var(--amber);
+    letter-spacing:0.08em;
+    text-transform:uppercase;
+    display:flex; align-items:center; gap:10px;
+    margin-bottom:18px;
+  }
+  .eyebrow::before{
+    content:"●";
+    color:var(--teal);
+    animation:pulse 2s infinite;
+  }
+  @keyframes pulse{
+    0%,100%{opacity:1;}
+    50%{opacity:0.3;}
+  }
+  h1.hero-title{
+    font-family:'Fraunces', serif;
+    font-size:clamp(36px, 6vw, 64px);
+    font-weight:600;
+    line-height:1.04;
+    max-width:760px;
+    margin-bottom:20px;
+  }
+  h1.hero-title em{
+    font-style:italic;
+    color:var(--amber);
+  }
+  .hero-sub{
+    color:var(--muted);
+    font-size:17px;
+    max-width:520px;
+    margin-bottom:28px;
+  }
+  .hero-meta{
+    display:flex; gap:24px; flex-wrap:wrap;
+    font-family:'JetBrains Mono', monospace;
+    font-size:12px;
+    color:var(--muted);
+  }
+  .hero-meta span b{color:var(--paper); font-weight:500;}
+
+  /* ---------- Section heads ---------- */
+  .section{padding:56px 24px; max-width:1080px; margin:0 auto;}
+  .section-head{
+    display:flex; align-items:baseline; justify-content:space-between;
+    margin-bottom:28px;
+    border-bottom:1px solid var(--hairline);
+    padding-bottom:16px;
+  }
+  .section-head h2{
+    font-family:'Fraunces', serif;
+    font-size:26px;
+    font-weight:600;
+  }
+  .section-head .count{
+    font-family:'JetBrains Mono', monospace;
+    font-size:12px;
+    color:var(--muted);
+  }
+
+  /* ---------- Dispatch feed (signature element) ---------- */
+  .dispatch{
+    display:grid;
+    grid-template-columns:96px 1fr;
+    gap:20px;
+    padding:20px 0;
+    border-bottom:1px solid var(--hairline);
+  }
+  .dispatch:last-child{border-bottom:none;}
+  .dispatch time{
+    font-family:'JetBrains Mono', monospace;
+    font-size:12px;
+    color:var(--muted);
+    padding-top:3px;
+  }
+  .dispatch .tag{
+    display:inline-block;
+    font-family:'JetBrains Mono', monospace;
+    font-size:10px;
+    text-transform:uppercase;
+    letter-spacing:0.06em;
+    color:var(--teal);
+    border:1px solid rgba(61,220,151,0.35);
+    border-radius:3px;
+    padding:2px 6px;
+    margin-bottom:8px;
+  }
+  .dispatch .tag.model{color:var(--amber); border-color:rgba(255,138,61,0.35);}
+  .dispatch h3{
+    font-family:'Inter', sans-serif;
+    font-size:17px;
+    font-weight:600;
+    margin-bottom:6px;
+  }
+  .dispatch p{
+    color:var(--muted);
+    font-size:14px;
+    max-width:640px;
+  }
+  .dispatch .src{
+    font-family:'JetBrains Mono', monospace;
+    font-size:11px;
+    color:var(--muted);
+    margin-top:8px;
+    display:inline-block;
+  }
+  .dispatch .src:hover{color:var(--amber);}
+
+  /* ---------- Video shelf ---------- */
+  .shelf{
+    display:grid;
+    grid-template-columns:repeat(auto-fill, minmax(230px, 1fr));
+    gap:18px;
+  }
+  .card{
+    background:var(--panel);
+    border:1px solid var(--hairline);
+    border-radius:8px;
+    padding:18px;
+    transition:border-color 0.15s ease, transform 0.15s ease;
+  }
+  .card:hover{
+    border-color:var(--amber);
+    transform:translateY(-2px);
+  }
+  .card .plat{
+    font-family:'JetBrains Mono', monospace;
+    font-size:11px;
+    color:var(--muted);
+    margin-bottom:10px;
+    display:flex; align-items:center; gap:6px;
+  }
+  .card .plat::before{
+    content:"▶";
+    color:var(--amber);
+    font-size:9px;
+  }
+  .card h3{
+    font-size:15px;
+    font-weight:600;
+    margin-bottom:8px;
+    line-height:1.3;
+  }
+  .card p{
+    color:var(--muted);
+    font-size:13px;
+    margin-bottom:14px;
+  }
+  .card .watch{
+    font-family:'JetBrains Mono', monospace;
+    font-size:12px;
+    color:var(--teal);
+  }
+  .card .watch:hover{text-decoration:underline;}
+
+  /* ---------- Footer ---------- */
+  footer{
+    border-top:1px solid var(--hairline);
+    padding:32px 24px;
+    max-width:1080px; margin:0 auto;
+    display:flex; justify-content:space-between; align-items:center;
+    font-family:'JetBrains Mono', monospace;
+    font-size:12px;
+    color:var(--muted);
+    flex-wrap:wrap;
+    gap:12px;
+  }
+
+  @media (max-width:640px){
+    .top-nav{display:none;}
+    .dispatch{grid-template-columns:1fr; gap:6px;}
+    .dispatch time{padding-top:0;}
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    .eyebrow::before{animation:none;}
+    .card{transition:none;}
+  }
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div class="top-inner">
+    <div class="logo"><span class="dot"></span>Signal</div>
+    <nav class="top-nav">
+      <a href="#dispatches">Dispatches</a>
+      <a href="#learn">Beginners</a>
+      <a href="#leaders">Leaders</a>
+      <a href="#about">About</a>
+    </nav>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="eyebrow">Live feed · updated weekly</div>
+  <h1 class="hero-title">Track what's <em>actually</em> moving in AI, then go learn it.</h1>
+  <p class="hero-sub">A running log of model releases, tools, and research worth knowing — paired with the best YouTube explainers for each one.</p>
+  <div class="hero-meta">
+    <span><b id="dispatch-count">5</b> dispatches logged</span>
+    <span><b>9</b> channels curated</span>
+    <span><b>2026</b> archive</span>
+  </div>
+</section>
+
+<section class="section" id="dispatches">
+  <div class="section-head">
+    <h2>Dispatch log</h2>
+    <span class="count">most recent first</span>
+  </div>
+
+  <div id="dispatch-list">
+    <div class="dispatch">
+      <time>···</time>
+      <div>
+        <p style="color:var(--muted); font-family:'JetBrains Mono', monospace; font-size:13px;">Loading latest dispatches…</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="learn">
+  <div class="section-head">
+    <h2>Start here: complete beginners</h2>
+    <span class="count">no jargon, no code required</span>
+  </div>
+
+  <div class="shelf">
+    <div class="card">
+      <div class="plat">YouTube channel</div>
+      <h3>Two Minute Papers</h3>
+      <p>Short, visual breakdowns of new AI research — explains why a discovery matters without requiring a technical background.</p>
+      <a class="watch" href="https://www.youtube.com/@TwoMinutePapers" target="_blank">Visit channel →</a>
+    </div>
+    <div class="card">
+      <div class="plat">YouTube channel</div>
+      <h3>All About AI</h3>
+      <p>Plain-English explainers comparing tools like ChatGPT, Claude, and Gemini side by side — good for picking your first AI tool.</p>
+      <a class="watch" href="https://www.youtube.com/@AllAboutAI" target="_blank">Visit channel →</a>
+    </div>
+    <div class="card">
+      <div class="plat">YouTube channel</div>
+      <h3>DeepLearning.AI</h3>
+      <p>Founded by Andrew Ng. Structured, course-style videos that build from "what is an LLM" up to real workflows, at a gentle pace.</p>
+      <a class="watch" href="https://www.youtube.com/@Deeplearningai" target="_blank">Visit channel →</a>
+    </div>
+    <div class="card">
+      <div class="plat">YouTube channel</div>
+      <h3>freeCodeCamp</h3>
+      <p>Full beginner courses on AI and machine learning fundamentals — long-form, but structured like an actual class with a clear path.</p>
+      <a class="watch" href="https://www.youtube.com/@freecodecamp" target="_blank">Visit channel →</a>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="leaders">
+  <div class="section-head">
+    <h2>For managers & leaders (40+)</h2>
+    <span class="count">strategy over syntax</span>
+  </div>
+
+  <div class="shelf">
+    <div class="card">
+      <div class="plat">YouTube channel</div>
+      <h3>Matt Wolfe</h3>
+      <p>Weekly roundups of new AI tools and model releases, tested and explained for non-technical founders, operators, and managers.</p>
+      <a class="watch" href="https://www.youtube.com/@mreflow" target="_blank">Visit channel →</a>
+    </div>
+    <div class="card">
+      <div class="plat">YouTube channel</div>
+      <h3>IBM Technology</h3>
+      <p>A corporate, governance-minded view of AI — useful for understanding risk, productivity gains, and enterprise rollout at a leadership level.</p>
+      <a class="watch" href="https://www.youtube.com/@IBMTechnology" target="_blank">Visit channel →</a>
+    </div>
+    <div class="card">
+      <div class="plat">YouTube channel</div>
+      <h3>Wes Roth</h3>
+      <p>Business-focused analysis of how new AI releases affect strategy, productivity, and decision-making — built for an executive audience.</p>
+      <a class="watch" href="https://www.youtube.com/@WesRoth" target="_blank">Visit channel →</a>
+    </div>
+    <div class="card">
+      <div class="plat">YouTube channel</div>
+      <h3>The AI Advantage</h3>
+      <p>Short, no-code tutorials on practical automation for business owners — think workflow tools, not programming.</p>
+      <a class="watch" href="https://www.youtube.com/@AItoolsadvantage" target="_blank">Visit channel →</a>
+    </div>
+    <div class="card">
+      <div class="plat">YouTube channel</div>
+      <h3>Lex Fridman Podcast</h3>
+      <p>Long-form interviews with the people building frontier AI (Altman, Hassabis, Amodei, and others) — best for understanding the "why" behind the headlines, watched in pieces.</p>
+      <a class="watch" href="https://www.youtube.com/@lexfridman" target="_blank">Visit channel →</a>
+    </div>
+  </div>
+</section>
+
+<footer id="about">
+  <span>signal — a personal log of AI news and learning resources</span>
+  <span>built with plain HTML, hosted on GitHub Pages</span>
+</footer>
+
+<script>
+  async function loadDispatches() {
+    const list = document.getElementById('dispatch-list');
+    const countEl = document.getElementById('dispatch-count');
+    try {
+      const res = await fetch('dispatches.json', { cache: 'no-store' });
+      if (!res.ok) throw new Error('fetch failed');
+      const data = await res.json();
+      const items = data.items || [];
+
+      if (items.length === 0) {
+        list.innerHTML = '<p style="color:var(--muted); font-size:14px;">No dispatches yet — check back soon.</p>';
+        return;
+      }
+
+      list.innerHTML = items.map(item => {
+        const d = new Date(item.date);
+        const dateLabel = isNaN(d) ? '' : (String(d.getMonth() + 1).padStart(2, '0') + '.' + String(d.getDate()).padStart(2, '0'));
+        const tagClass = item.tag_class ? ' ' + item.tag_class : '';
+        return `
+          <div class="dispatch">
+            <time>${dateLabel}</time>
+            <div>
+              <span class="tag${tagClass}">${escapeHtml(item.tag || 'news')}</span>
+              <h3>${escapeHtml(item.title)}</h3>
+              <p>${escapeHtml(item.summary || '')}</p>
+              <a class="src" href="${item.link}" target="_blank" rel="noopener">→ ${escapeHtml(item.source || 'source')}</a>
+            </div>
+          </div>`;
+      }).join('');
+
+      if (countEl) countEl.textContent = items.length;
+    } catch (err) {
+      list.innerHTML = '<p style="color:var(--muted); font-size:14px;">Couldn\'t load the latest dispatches right now.</p>';
+      console.error(err);
+    }
+  }
+
+  function escapeHtml(str) {
+    const div = document.createElement('div');
+    div.textContent = str || '';
+    return div.innerHTML;
+  }
+
+  loadDispatches();
+</script>
+
+</body>
+</html>

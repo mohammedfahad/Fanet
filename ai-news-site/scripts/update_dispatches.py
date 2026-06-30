@@ -19,9 +19,17 @@ FEEDS = [
     {"name": "VentureBeat AI", "url": "https://venturebeat.com/category/ai/feed/", "tag": "news"},
     {"name": "MIT Technology Review", "url": "https://www.technologyreview.com/feed/", "tag": "research"},
     {"name": "The Verge AI", "url": "https://www.theverge.com/rss/ai-artificial-intelligence/index.xml", "tag": "tool"},
+    {"name": "OpenAI", "url": "https://openai.com/news/rss.xml", "tag": "model"},
+    {"name": "Google DeepMind", "url": "https://deepmind.google/blog/rss.xml", "tag": "model"},
+    {"name": "Google Research", "url": "https://research.google/blog/rss", "tag": "research"},
+    {"name": "Hugging Face", "url": "https://huggingface.co/blog/feed.xml", "tag": "tool"},
+    {"name": "NVIDIA", "url": "https://blogs.nvidia.com/feed/", "tag": "hardware"},
+    {"name": "Microsoft Research", "url": "https://www.microsoft.com/en-us/research/feed/", "tag": "research"},
 ]
+# Note: Anthropic does not publish an official public RSS feed as of mid-2026.
+# If that changes, just add a line above the same way the others are written.
 
-MAX_ITEMS = 8           # how many dispatches to keep on the site
+MAX_ITEMS = 10          # how many dispatches to keep on the site
 MAX_PER_FEED = 4        # cap any single feed so it can't flood the list
 SUMMARY_LENGTH = 160    # characters
 
